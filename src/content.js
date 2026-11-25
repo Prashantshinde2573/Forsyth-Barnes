@@ -32,6 +32,21 @@ export const awards = [
   'Multiple EMC awards, including Best Use of Tech',
 ]
 
+export const accolades = [
+  { file: 'awards/award-11.png', title: 'Recruiter Awards Winner, 2026', bg: '#0c2340' },
+  { file: 'awards/award-10.png', title: 'Women in Tech Employer Winner, 2025', bg: '#4b2854' },
+  { file: 'awards/award-12.png', title: 'Recruiter Awards Shortlisted, 2025', bg: '#160d2b' },
+  { file: 'awards/award-9.png', title: 'Recruiter Awards Shortlisted, 2024', bg: '#fbeaf1' },
+  { file: 'awards/award-7.png', title: 'FT 1000 Fastest Growing, 2023', bg: '#f6efe7' },
+  { file: 'awards/award-6.png', title: 'Recruiter Awards Shortlisted, 2023', bg: '#eee4f7' },
+  { file: 'awards/award-2.png', title: 'Nottinghamshire Business Finalist, 2021', bg: '#eef5ef' },
+  { file: 'awards/award-3.png', title: 'East Midlands Leadership Winner, 2021', bg: '#132645' },
+  { file: 'awards/award-4.png', title: 'FT 1000 Fastest Growing, 2021', bg: '#f6efe7' },
+  { file: 'awards/award-5.png', title: 'Recruiter Awards Shortlisted, 2021', bg: '#12121e' },
+  { file: 'awards/award-8.png', title: 'FT 1000 Fastest Growing, 2020', bg: '#f6efe7' },
+  { file: 'awards/award-1.png', title: 'Recruiter Awards Shortlisted, 2020', bg: '#1a1033' },
+]
+
 export const salaryGuide = 'https://resources.forsythbarnes.com/?utm_source=website&utm_medium=redirect&utm_campaign=salary_guide_2026'
 export const social = [
   ['LinkedIn', 'https://www.linkedin.com/company/forsythbarnes/'],

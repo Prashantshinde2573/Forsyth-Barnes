@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { awards, heroVideo, media, metrics, navigation, route, salaryGuide, sectors, social, solutions } from './content'
+import { accolades, awards, heroVideo, media, metrics, navigation, route, salaryGuide, social, solutions } from './content'
 import gallery from './media.json'
 import { officePins, worldRegions } from './worldMap'
 
@@ -456,17 +456,133 @@ function Solutions() {
 }
 
 function About() {
+  const track = useRef(null)
+
+  function move(direction) {
+    const element = track.current
+    if (!element) return
+    const max = element.scrollWidth - element.clientWidth
+    const distance = Math.max(220, element.clientWidth * 0.55)
+    let left = element.scrollLeft + direction * distance
+    if (direction > 0 && element.scrollLeft >= max - 4) left = 0
+    if (direction < 0 && element.scrollLeft <= 4) left = max
+    element.scrollTo({ left, behavior: 'smooth' })
+  }
+
   return (
-    <section className="wrap section story" aria-labelledby="story-title">
-      <div>
+    <section className="section story" aria-labelledby="story-title">
+      <div className="wrap story-header">
         <h2 id="story-title">There’s a better way.</h2>
-        <p>We build long-term partnerships with clients and candidates, combining personal relationships with investment in AI and technology to help businesses find talent.</p>
-        <p>We help FTSE organisations and fast-growing scale-ups build high-performing teams. The Financial Times has recognised Forsyth Barnes as one of Europe’s fastest-growing businesses.</p>
+        <p>Forsyth Barnes is a global talent partner disrupting the recruitment industry — blending personal partnerships with AI and technology for FTSE organisations and hyper-growth scale-ups.</p>
         <Link className="text-link" path="/about-us">More about us <Arrow /></Link>
       </div>
-      <ul className="sector-list" aria-label="Specialist sectors">
-        {sectors.map(([name, url]) => <li key={url}><Link path={url}>{name}<Arrow /></Link></li>)}
-      </ul>
+
+      <div className="wrap story-accolades">
+        <ul className="accolades-track" ref={track} aria-label="Awards and accolades">
+          {accolades.map(({ file, title, bg }) => (
+            <li key={file} className="accolade-item">
+              <div className="accolade-tile" style={{ backgroundColor: bg }}>
+                <img src={media(file)} alt={title} loading="lazy" decoding="async" />
+              </div>
+              <span className="accolade-title">{title}</span>
+            </li>
+          ))}
+        </ul>
+
+        <div className="accolades-controls">
+          <button type="button" aria-label="Previous accolades" onClick={() => move(-1)}>‹</button>
+          <button type="button" aria-label="Next accolades" onClick={() => move(1)}>›</button>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function LookingFor() {
+  const cardRef = useRef(null)
+  const bgRef = useRef(null)
+
+  useEffect(() => {
+    const card = cardRef.current
+    const bg = bgRef.current
+    if (!card || !bg) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+    let rafId = null
+
+    function update() {
+      rafId = null
+      const rect = card.getBoundingClientRect()
+      const vh = window.innerHeight || 800
+      const progress = Math.min(1, Math.max(0, (vh - rect.top) / (vh + rect.height)))
+      const offset = (progress - 0.5) * 56
+      bg.style.transform = `translate3d(0, ${offset.toFixed(1)}px, 0) scale(1.08)`
+    }
+
+    function onScroll() {
+      if (!rafId) rafId = requestAnimationFrame(update)
+    }
+
+    update()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+      if (rafId) cancelAnimationFrame(rafId)
+    }
+  }, [])
+
+  return (
+    <section className="wrap looking-for" aria-label="How can we help you">
+      <div className="looking-for-grid">
+        <article className="intent-card is-employer">
+          <span className="intent-badge">For Employers</span>
+          <h3>I’m looking to fill mid to executive positions</h3>
+          <p>Are you looking for a talent partner? We can help.</p>
+          <ul className="intent-proof" aria-label="Employer track record">
+            <li>98% searches filled</li>
+            <li>99% on-time shortlists</li>
+            <li>eTail, FinTech &amp; Sports</li>
+          </ul>
+          <div className="intent-actions">
+            <Link path="/solutions" className="button intent-cta">
+              Explore Solutions <Arrow />
+            </Link>
+            <Link path="/contact-us" className="intent-secondary">
+              Book a Consultation <Arrow />
+            </Link>
+          </div>
+        </article>
+
+        <article ref={cardRef} className="intent-card is-candidate">
+          <img
+            ref={bgRef}
+            src={media('team-68.jpg')}
+            alt=""
+            aria-hidden="true"
+            className="intent-bg"
+            loading="lazy"
+            decoding="async"
+          />
+          <span className="intent-badge">For Candidates</span>
+          <h3>I’m looking for career enhancement</h3>
+          <p>Are you looking for career progression? We can find it for you.</p>
+          <ul className="intent-proof" aria-label="Candidate opportunities">
+            <li>Mid-level to C-suite</li>
+            <li>FTSE &amp; global scale-ups</li>
+            <li>97% 2+ yr retention</li>
+          </ul>
+          <div className="intent-actions">
+            <Link path="/jobs" className="button primary intent-cta">
+              Browse Open Roles <Arrow />
+            </Link>
+            <a href={salaryGuide} className="intent-secondary">
+              2026 Salary Guide <Arrow />
+            </a>
+          </div>
+        </article>
+      </div>
     </section>
   )
 }
@@ -689,30 +805,151 @@ function Team() {
   )
 }
 
+function SocialIcon({ name }) {
+  switch (name) {
+    case 'LinkedIn':
+      return (
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M6.94 8.5H3.56V19.5H6.94V8.5ZM5.25 3.5A2.02 2.02 0 0 0 3.22 5.52 2.02 2.02 0 0 0 5.25 7.55 2.02 2.02 0 0 0 7.28 5.52 2.02 2.02 0 0 0 5.25 3.5ZM20.44 13.02C20.44 9.88 18.76 8.21 16.17 8.21C14.37 8.21 13.48 9.21 13.02 9.94V8.5H9.65C9.7 9.48 9.65 19.5 9.65 19.5H13.02V13.36C13.02 13.02 13.05 12.69 13.15 12.45C13.42 11.78 14.03 11.09 15.07 11.09C16.41 11.09 17.06 12.11 17.06 13.6V19.5H20.44V13.02Z" />
+        </svg>
+      )
+    case 'Instagram':
+      return (
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <rect x="3" y="3" width="18" height="18" rx="4" />
+          <circle cx="12" cy="12" r="4" />
+          <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+        </svg>
+      )
+    case 'YouTube':
+      return (
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M21.58 7.19C21.35 6.33 20.67 5.65 19.81 5.42C18.25 5 12 5 12 5C12 5 5.75 5 4.19 5.42C3.33 5.65 2.65 6.33 2.42 7.19C2 8.75 2 12 2 12C2 12 2 15.25 2.42 16.81C2.65 17.67 3.33 18.35 4.19 18.58C5.75 19 12 19 12 19C12 19 18.25 19 19.81 18.58C20.67 18.35 21.35 17.67 21.58 16.81C22 15.25 22 12 22 12C22 12 22 8.75 21.58 7.19ZM10 15V9L15.2 12L10 15Z" />
+        </svg>
+      )
+    default:
+      return (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M18.244 2.25H21.552L14.325 10.51L22.827 21.75H16.17L10.956 14.933L4.99 21.75H1.68L9.41 12.915L1.254 2.25H8.08L12.793 8.481L18.244 2.25ZM17.083 19.77H18.916L7.084 4.126H5.117L17.083 19.77Z" />
+        </svg>
+      )
+  }
+}
+
 function Footer() {
+  const [email, setEmail] = useState('')
+  const [subscribed, setSubscribed] = useState(false)
+
+  function handleSubscribe(event) {
+    event.preventDefault()
+    if (!email.trim()) return
+    setSubscribed(true)
+    setEmail('')
+  }
+
+  const orbitAvatars = [
+    { file: 'team-68.jpg', pos: 'pos-1' },
+    { file: 'team-69.jpg', pos: 'pos-2' },
+    { file: 'team-65.jpg', pos: 'pos-3' },
+    { file: 'team-67.jpg', pos: 'pos-4' },
+    { file: 'team-70.jpg', pos: 'pos-5' },
+  ]
+
   return (
     <footer className="footer">
       <div className="wrap">
         <div className="footer-callout">
-          <h2>Get in touch.</h2>
-          <Link className="button primary" path="/contact-us">Contact us <Arrow /></Link>
+          <div className="footer-callout-copy">
+            <span className="footer-eyebrow">Global Talent Partner</span>
+            <h2>Get in touch.</h2>
+            <p>Partner with our specialists to fill mid-to-executive roles or unlock your next career move.</p>
+            <Link className="button footer-pill-btn" path="/contact-us">
+              Contact us <Arrow />
+            </Link>
+          </div>
+          <div className="footer-orbit" aria-hidden="true">
+            <span className="orbit-ring ring-3" />
+            <span className="orbit-ring ring-2" />
+            <span className="orbit-ring ring-1" />
+            <div className="orbit-center">
+              <svg width="22" height="22" viewBox="0 0 36 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M19.53 49.54H0V43.994H18.8C24.789 43.994 28.356 40.911 28.356 35.741C28.356 30.508 24.497 27.125 18.525 27.125H18.125V21.747C23.577 21.547 27.063 18.47 27.063 13.817C27.063 9 23.534 6 17.872 6H0V0.43H18.592C28.123 0.43 34.281 5.285 34.281 12.794C34.281 17.979 31.392 21.868 26.132 23.749L24.055 24.505L26.23 24.886C31.392 25.786 35.438 30.936 35.438 36.61C35.438 44.34 29.045 49.54 19.53 49.54Z" fill="#8c4b9d" />
+              </svg>
+            </div>
+            {orbitAvatars.map(({ file, pos }) => (
+              <img key={file} src={media(file)} alt="" className={`orbit-avatar ${pos}`} loading="lazy" decoding="async" />
+            ))}
+          </div>
         </div>
+
         <div className="footer-top">
-          <Brand />
-          <nav aria-label="Footer navigation">
-            {navigation.map(([name, path]) => <Link key={path} path={path}>{name}</Link>)}
-            <Link path="/join-our-team">Join our team</Link>
-            <a href={salaryGuide}>Salary guides 2026</a>
-          </nav>
-          <nav aria-label="Social media">
-            {social.map(([name, url]) => <a key={url} href={url}>{name}</a>)}
-          </nav>
+          <div className="footer-brand-col">
+            <Brand />
+            <p>A global talent partner for mid-level to executive recruitment across eTail, FinTech, and Sports &amp; Entertainment.</p>
+            <nav className="footer-socials" aria-label="Social media">
+              {social.map(([name, url]) => (
+                <a key={url} href={url} aria-label={name} title={name} target="_blank" rel="noreferrer">
+                  <SocialIcon name={name} />
+                </a>
+              ))}
+            </nav>
+          </div>
+
+          <div className="footer-links-grid">
+            {navigation.map(([group, path, links]) => (
+              <div className="footer-col" key={path}>
+                <h3>{group}</h3>
+                <nav aria-label={`${group} links`}>
+                  <Link path={path}>
+                    {group === 'Job search' ? 'All jobs' : group === 'About us' ? 'About us' : `All ${group.toLowerCase()}`}
+                  </Link>
+                  {links.map(([name, url]) => <Link key={url} path={url}>{name}</Link>)}
+                  {group === 'Job search' && <a href={salaryGuide}>Salary guides 2026 <Arrow /></a>}
+                </nav>
+              </div>
+            ))}
+          </div>
+
+          <div className="footer-col footer-newsletter">
+            <h3>Newsletter</h3>
+            <p>Get talent market insights, salary guides, and executive opportunities.</p>
+            <form className="newsletter-form" onSubmit={handleSubscribe}>
+              <span className="newsletter-at" aria-hidden="true">@</span>
+              <input
+                type="email"
+                required
+                aria-label="Email address"
+                placeholder="Enter your email..."
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value)
+                  if (subscribed) setSubscribed(false)
+                }}
+              />
+              <button type="submit" aria-label="Subscribe to newsletter">
+                <Arrow>→</Arrow>
+              </button>
+            </form>
+            {subscribed && (
+              <p className="newsletter-note" role="status">
+                Thanks! We’ll keep you updated.
+              </p>
+            )}
+            <a className="news-link" href="https://www.thebusinessdesk.com/eastmidlands/news/2073781-magpies-appoint-new-ceo">
+              In the news: Notts County FC CEO placement <Arrow />
+            </a>
+          </div>
         </div>
-        <a className="text-link news-link" href="https://www.thebusinessdesk.com/eastmidlands/news/2073781-magpies-appoint-new-ceo">In the news: Notts County FC CEO placement <Arrow /></a>
+
         <div className="footer-bottom">
-          <span>© {new Date().getFullYear()} Forsyth Barnes</span>
-          <Link path="/privacy-and-cookie-policies">Privacy policy</Link>
-          <Link path="/terms-conditions">Terms &amp; conditions</Link>
+          <div className="footer-legal">
+            <span>© {new Date().getFullYear()} Forsyth Barnes</span>
+            <Link path="/privacy-and-cookie-policies">Privacy policy</Link>
+            <Link path="/terms-conditions">Terms &amp; conditions</Link>
+          </div>
+          <div className="footer-cities">
+            London · New York · Nottingham · Dubai
+          </div>
         </div>
       </div>
     </footer>
@@ -728,8 +965,9 @@ export default function HomePage() {
         <Hero />
         <Clients />
         <Solutions />
-        <About />
         <Results />
+        <About />
+        <LookingFor />
         <Videos />
         <Team />
       </main>
