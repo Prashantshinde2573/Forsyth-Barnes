@@ -424,10 +424,14 @@ function Solutions() {
                   onMouseLeave={() => setPaused(false)}
                 >
                   <h3>{item.title}</h3>
-                  <p>{item.description}</p>
-                  <Link path={item.path} className="solution-link" tabIndex={isActive ? 0 : -1}>
-                    Learn More <Arrow>→</Arrow>
-                  </Link>
+                  <div className="solution-card-extra">
+                    <div className="solution-card-extra-inner">
+                      <p>{item.description}</p>
+                      <Link path={item.path} className="solution-link" tabIndex={isActive ? 0 : -1}>
+                        Learn More <Arrow>→</Arrow>
+                      </Link>
+                    </div>
+                  </div>
                 </div>
               </article>
             )
@@ -787,6 +791,15 @@ function Videos() {
   )
 }
 
+function BrandMark({ className = '', width = 24, height = 33 }) {
+  return (
+    <svg className={className} width={width} height={height} viewBox="0 0 36 50" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M19.53,49.54H0V43.994H18.8c5.989,0,9.556-3.083,9.556-8.253,0-5.233-3.859-8.616-9.831-8.616h-.4V21.747c5.452-.2,8.938-3.277,8.938-7.93C27.062,9,23.533,6,17.871,6H0V.43H18.592c9.531,0,15.689,4.855,15.689,12.364,0,5.185-2.889,9.074-8.149,10.955l-2.077.756,2.175.381c5.162.9,9.208,6.05,9.208,11.724C35.438,44.34,29.045,49.54,19.53,49.54Z" transform="translate(0 -0.322)" fill="#8c4b9d" />
+      <path d="M0,36.32H19.157v5.019H0ZM16.132,49.294v4.93H6.223V67.332H0V49.294Z" transform="translate(0 -27.165)" fill="#18131a" />
+    </svg>
+  )
+}
+
 function Team() {
   const topLeft = gallery.photos[3]
   const bottomLeft = gallery.photos[1]
@@ -818,9 +831,7 @@ function Team() {
               </textPath>
             </text>
           </svg>
-          <svg className="team-emblem-b" width="24" height="33" viewBox="0 0 36 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M19.53 49.54H0V43.994H18.8C24.789 43.994 28.356 40.911 28.356 35.741C28.356 30.508 24.497 27.125 18.525 27.125H18.125V21.747C23.577 21.547 27.063 18.47 27.063 13.817C27.063 9 23.534 6 17.872 6H0V0.43H18.592C28.123 0.43 34.281 5.285 34.281 12.794C34.281 17.979 31.392 21.868 26.132 23.749L24.055 24.505L26.23 24.886C31.392 25.786 35.438 30.936 35.438 36.61C35.438 44.34 29.045 49.54 19.53 49.54Z" fill="#8c4b9d" />
-          </svg>
+          <BrandMark className="team-emblem-b" width={26} height={36} />
         </div>
       </div>
       <div className="team-copy">
@@ -903,9 +914,7 @@ function Footer() {
             <span className="orbit-ring ring-2" />
             <span className="orbit-ring ring-1" />
             <div className="orbit-center">
-              <svg width="22" height="22" viewBox="0 0 36 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M19.53 49.54H0V43.994H18.8C24.789 43.994 28.356 40.911 28.356 35.741C28.356 30.508 24.497 27.125 18.525 27.125H18.125V21.747C23.577 21.547 27.063 18.47 27.063 13.817C27.063 9 23.534 6 17.872 6H0V0.43H18.592C28.123 0.43 34.281 5.285 34.281 12.794C34.281 17.979 31.392 21.868 26.132 23.749L24.055 24.505L26.23 24.886C31.392 25.786 35.438 30.936 35.438 36.61C35.438 44.34 29.045 49.54 19.53 49.54Z" fill="#8c4b9d" />
-              </svg>
+              <BrandMark width={20} height={27} />
             </div>
             {orbitAvatars.map(({ file, pos }) => (
               <img key={file} src={media(file)} alt="" className={`orbit-avatar ${pos}`} loading="lazy" decoding="async" />
@@ -998,8 +1007,8 @@ export default function HomePage() {
         <About />
         <Results />
         <Solutions />
-        <LookingFor />
         <Videos />
+        <LookingFor />
         <Team />
       </main>
       <Footer />

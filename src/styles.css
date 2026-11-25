@@ -395,7 +395,7 @@ body:has(> #root > .fb-home) {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding-block: calc(var(--nav-height) + 48px) clamp(56px, 7.5vw, 96px);
+  padding-block: calc(var(--nav-height) + 48px) clamp(56px, 7.5vw, 0px);
   animation: fb-enter .7s ease-out both;
 }
 
@@ -738,9 +738,25 @@ body:has(> #root > .fb-home) {
 
 .fb-home .solution-card h3 {
   margin: 0;
-  font: 650 .86rem/1.2 system-ui, sans-serif;
-  text-transform: uppercase;
-  letter-spacing: .08em;
+  font: 400 clamp(1.45rem, 2.2vw, 1.95rem)/1.12 var(--display);
+  letter-spacing: -.025em;
+}
+
+.fb-home .solution-card-extra {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows .3s ease, opacity .25s ease;
+}
+
+.fb-home .solution-card-extra-inner {
+  overflow: hidden;
+}
+
+.fb-home .solution-slide:hover .solution-card-extra,
+.fb-home .solution-slide:focus-within .solution-card-extra {
+  grid-template-rows: 1fr;
+  opacity: 1;
 }
 
 .fb-home .solution-card p {
@@ -935,8 +951,7 @@ body:has(> #root > .fb-home) {
 }
 
 .fb-home .looking-for {
-  padding-top: clamp(20px, 3vw, 36px);
-  padding-bottom: clamp(16px, 2.5vw, 32px);
+  padding-block: clamp(24px, 3vw, 44px);
 }
 
 .fb-home .looking-for-grid {
@@ -1280,6 +1295,10 @@ body:has(> #root > .fb-home) {
   border-color: #e1bbeb;
   color: #fff;
   text-decoration: none;
+}
+
+.fb-home .videos {
+  padding-bottom: clamp(32px, 4vw, 56px);
 }
 
 .fb-home .videos .rail {
@@ -1633,7 +1652,9 @@ body:has(> #root > .fb-home) {
 }
 
 @keyframes fb-orbit-float {
-  0%, 100% {
+
+  0%,
+  100% {
     margin-top: 0;
   }
 
@@ -2068,5 +2089,143 @@ body:has(> #root > .fb-home) {
 
   .fb-home .clients-track>li[aria-hidden=true] {
     display: none;
+  }
+}
+
+.fb-home .solutions-bento {
+  padding-block: clamp(48px, 6vw, 84px) clamp(24px, 3vw, 44px);
+}
+
+.fb-home .bento-header {
+  text-align: center;
+  margin-bottom: clamp(24px, 3.5vw, 36px);
+}
+
+.fb-home .bento-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 14px;
+  max-width: 1000px;
+  margin-inline: auto;
+}
+
+.fb-home .bento-card {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: flex-end;
+  min-height: 270px;
+  padding: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
+  background: var(--plum);
+  color: #fff;
+  box-shadow: 0 12px 30px rgba(28, 16, 36, 0.1);
+  overflow: hidden;
+  transition: box-shadow .25s ease, transform .25s ease;
+}
+
+.fb-home .bento-card:hover {
+  box-shadow: 0 18px 38px rgba(28, 16, 36, 0.18);
+  transform: translateY(-2px);
+}
+
+.fb-home .bento-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .5s ease;
+}
+
+.fb-home .bento-card:hover .bento-bg {
+  transform: scale(1.05);
+}
+
+.fb-home .bento-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg, rgba(16, 9, 20, 0.12) 0%, rgba(16, 9, 20, 0.52) 45%, rgba(16, 9, 20, 0.92) 100%);
+  pointer-events: none;
+}
+
+.fb-home .bento-card.is-wide {
+  grid-column: span 7;
+}
+
+.fb-home .bento-card.is-narrow {
+  grid-column: span 5;
+}
+
+.fb-home .bento-copy {
+  width: 100%;
+}
+
+.fb-home .bento-copy h3 {
+  margin: 0;
+  font: 400 clamp(1.65rem, 2.4vw, 2.15rem)/1.1 var(--display);
+  letter-spacing: -.03em;
+  color: #fff;
+}
+
+.fb-home .bento-extra {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows .3s ease, opacity .25s ease;
+}
+
+.fb-home .bento-extra-inner {
+  overflow: hidden;
+}
+
+.fb-home .bento-card:hover .bento-extra,
+.fb-home .bento-card:focus-within .bento-extra {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.fb-home .bento-copy p {
+  margin-top: 8px;
+  font-size: .86rem;
+  line-height: 1.48;
+  color: rgba(245, 239, 247, 0.9);
+}
+
+.fb-home .bento-link {
+  margin-top: 14px;
+  min-height: 38px;
+  padding: 8px 14px;
+  font-size: .82rem;
+  background: #fff;
+  color: var(--ink);
+  gap: 8px;
+}
+
+.fb-home .bento-link:hover {
+  background: #eee4f0;
+}
+
+@media (hover: none) {
+  .fb-home .solution-card-extra,
+  .fb-home .bento-extra {
+    grid-template-rows: 1fr;
+    opacity: 1;
+  }
+}
+
+@media (max-width: 720px) {
+  .fb-home .bento-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .fb-home .bento-card.is-wide,
+  .fb-home .bento-card.is-narrow {
+    grid-column: auto;
+    min-height: 240px;
   }
 }
