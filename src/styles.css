@@ -742,23 +742,6 @@ body:has(> #root > .fb-home) {
   letter-spacing: -.025em;
 }
 
-.fb-home .solution-card-extra {
-  display: grid;
-  grid-template-rows: 0fr;
-  opacity: 0;
-  transition: grid-template-rows .3s ease, opacity .25s ease;
-}
-
-.fb-home .solution-card-extra-inner {
-  overflow: hidden;
-}
-
-.fb-home .solution-slide:hover .solution-card-extra,
-.fb-home .solution-slide:focus-within .solution-card-extra {
-  grid-template-rows: 1fr;
-  opacity: 1;
-}
-
 .fb-home .solution-card p {
   margin-top: 10px;
   font-size: .95rem;
@@ -1333,7 +1316,22 @@ body:has(> #root > .fb-home) {
   transition: transform .35s;
 }
 
-.fb-home .video-card:hover img {
+.fb-home .video-preview {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity .35s ease, transform .35s ease;
+}
+
+.fb-home .video-preview[data-started=true] {
+  opacity: 1;
+}
+
+.fb-home .video-card:hover img,
+.fb-home .video-card:hover .video-preview {
   transform: scale(1.04);
 }
 
@@ -2211,7 +2209,6 @@ body:has(> #root > .fb-home) {
 }
 
 @media (hover: none) {
-  .fb-home .solution-card-extra,
   .fb-home .bento-extra {
     grid-template-rows: 1fr;
     opacity: 1;

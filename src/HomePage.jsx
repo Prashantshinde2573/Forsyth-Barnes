@@ -176,6 +176,14 @@ function Hero() {
     return () => preference.removeEventListener('change', update)
   }, [])
 
+  useEffect(() => {
+    const player = video.current
+    if (!motionAllowed || failed || !player) return
+    player.defaultMuted = true
+    player.muted = true
+    player.play().catch(() => {})
+  }, [motionAllowed, failed])
+
   function togglePlayback() {
     const player = video.current
     if (player.paused) {
@@ -424,14 +432,10 @@ function Solutions() {
                   onMouseLeave={() => setPaused(false)}
                 >
                   <h3>{item.title}</h3>
-                  <div className="solution-card-extra">
-                    <div className="solution-card-extra-inner">
-                      <p>{item.description}</p>
-                      <Link path={item.path} className="solution-link" tabIndex={isActive ? 0 : -1}>
-                        Learn More <Arrow>→</Arrow>
-                      </Link>
-                    </div>
-                  </div>
+                  <p>{item.description}</p>
+                  <Link path={item.path} className="solution-link" tabIndex={isActive ? 0 : -1}>
+                    Learn More <Arrow>→</Arrow>
+                  </Link>
                 </div>
               </article>
             )
@@ -759,8 +763,77 @@ function Results() {
   )
 }
 
+function VideoCard({ item, onOpen }) {
+  const cardRef = useRef(null)
+  const previewRef = useRef(null)
+  const [inView, setInView] = useState(false)
+  const [started, setStarted] = useState(false)
+  const [failed, setFailed] = useState(false)
+  const [motionAllowed, setMotionAllowed] = useState(false)
+
+  useEffect(() => {
+    const pref = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const sync = () => setMotionAllowed(!pref.matches)
+    sync()
+    pref.addEventListener('change', sync)
+    return () => pref.removeEventListener('change', sync)
+  }, [])
+
+  useEffect(() => {
+    const el = cardRef.current
+    if (!el || !motionAllowed) return
+    const observer = new IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting),
+      { threshold: 0.2 }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [motionAllowed])
+
+  useEffect(() => {
+    const player = previewRef.current
+    if (!player || failed || !motionAllowed) return
+    if (inView) {
+      player.defaultMuted = true
+      player.muted = true
+      player.play().catch(() => {})
+    } else {
+      player.pause()
+    }
+  }, [inView, failed, motionAllowed])
+
+  return (
+    <button ref={cardRef} type="button" className="video-card" onClick={() => onOpen(item)}>
+      <span className="video-image">
+        <img src={media(item.file)} alt="" loading="lazy" width="480" height="270" />
+        {motionAllowed && !failed && (
+          <video
+            ref={previewRef}
+            className="video-preview"
+            src={inView || started ? item.url : undefined}
+            poster={media(item.file)}
+            aria-hidden="true"
+            tabIndex={-1}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            data-started={started}
+            onPlaying={() => setStarted(true)}
+            onError={() => setFailed(true)}
+          />
+        )}
+        <span className="play" aria-hidden="true">▶</span>
+      </span>
+      <span className="video-title">{item.title}<Arrow /></span>
+    </button>
+  )
+}
+
 function Videos() {
   const dialog = useRef(null)
+  const dialogVideo = useRef(null)
   const [video, setVideo] = useState(null)
 
   function open(item) {
@@ -768,15 +841,20 @@ function Videos() {
     dialog.current.showModal()
   }
 
+  useEffect(() => {
+    const player = dialogVideo.current
+    if (!video || !player) return
+    player.defaultMuted = true
+    player.muted = true
+    player.play().catch(() => {})
+  }, [video])
+
   return (
     <>
       <Rail id="videos" heading="Watch our videos" className="section videos">
         {gallery.videos.map((item) => (
           <li key={item.url}>
-            <button type="button" className="video-card" onClick={() => open(item)}>
-              <span className="video-image"><img src={media(item.file)} alt="" loading="lazy" width="480" height="270" /><span className="play" aria-hidden="true">▶</span></span>
-              <span className="video-title">{item.title}<Arrow /></span>
-            </button>
+            <VideoCard item={item} onOpen={open} />
           </li>
         ))}
       </Rail>
@@ -785,7 +863,7 @@ function Videos() {
           <h2>{video?.title}</h2>
           <form method="dialog"><button type="submit" autoFocus aria-label="Close video">×</button></form>
         </div>
-        {video && <><video controls playsInline preload="metadata" src={video.url} poster={media(video.file)} /><a href={video.url} className="text-link">Open video directly <Arrow /></a></>}
+        {video && <><video ref={dialogVideo} controls autoPlay muted playsInline preload="metadata" src={video.url} poster={media(video.file)} /><a href={video.url} className="text-link">Open video directly <Arrow /></a></>}
       </dialog>
     </>
   )
@@ -1007,8 +1085,8 @@ export default function HomePage() {
         <About />
         <Results />
         <Solutions />
-        <Videos />
         <LookingFor />
+        <Videos />
         <Team />
       </main>
       <Footer />
