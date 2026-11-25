@@ -1,0 +1,270 @@
+{
+  "clients": [
+    {
+      "file": "client-1.png",
+      "alt": "AMG petronas logo"
+    },
+    {
+      "file": "client-2.png",
+      "alt": "Nike logo"
+    },
+    {
+      "file": "client-3.png",
+      "alt": "macy's logo"
+    },
+    {
+      "file": "client-4.png",
+      "alt": "live nation logo"
+    },
+    {
+      "file": "client-5.png",
+      "alt": "kohl's logo"
+    },
+    {
+      "file": "client-6.png",
+      "alt": "walgreens logo"
+    },
+    {
+      "file": "client-7.png",
+      "alt": "madison square garden logo"
+    },
+    {
+      "file": "client-8.png",
+      "alt": "sweaty betty logo"
+    },
+    {
+      "file": "client-9.png",
+      "alt": "ny islanders logo"
+    },
+    {
+      "file": "client-10.png",
+      "alt": "ifs logo"
+    },
+    {
+      "file": "client-11.png",
+      "alt": "LC Group logo"
+    },
+    {
+      "file": "client-12.png",
+      "alt": "atp logo"
+    },
+    {
+      "file": "client-13.png",
+      "alt": "kx logo"
+    },
+    {
+      "file": "client-14.png",
+      "alt": "miura logo"
+    },
+    {
+      "file": "client-15.png",
+      "alt": "sgv logo"
+    },
+    {
+      "file": "client-16.png",
+      "alt": "ivendi logo"
+    },
+    {
+      "file": "client-17.png",
+      "alt": "alshaya logo"
+    },
+    {
+      "file": "client-18.png",
+      "alt": "lululemon logo"
+    },
+    {
+      "file": "client-19.png",
+      "alt": "diageo logo"
+    },
+    {
+      "file": "client-20.png",
+      "alt": "ikea logo"
+    },
+    {
+      "file": "client-21.png",
+      "alt": "staples logo"
+    },
+    {
+      "file": "client-22.png",
+      "alt": "asm global logo"
+    },
+    {
+      "file": "client-23.png",
+      "alt": "mastercard"
+    },
+    {
+      "file": "client-24.png",
+      "alt": "manchester united"
+    },
+    {
+      "file": "client-25.png",
+      "alt": "holland and barrett"
+    },
+    {
+      "file": "client-26.png",
+      "alt": "ticketmaster logo"
+    },
+    {
+      "file": "client-27.png",
+      "alt": "gymshark logo"
+    },
+    {
+      "file": "client-28.png",
+      "alt": "origence logo"
+    },
+    {
+      "file": "client-29.png",
+      "alt": "william hill logo"
+    },
+    {
+      "file": "client-30.png",
+      "alt": "RedBull Racing logo"
+    },
+    {
+      "file": "client-31.png",
+      "alt": "MCC logo"
+    },
+    {
+      "file": "client-32.png",
+      "alt": "world sailing logo"
+    },
+    {
+      "file": "client-33.png",
+      "alt": "Giantx logo"
+    },
+    {
+      "file": "client-34.png",
+      "alt": "Wasabi logo"
+    },
+    {
+      "file": "client-35.png",
+      "alt": "virgin voyages logo"
+    },
+    {
+      "file": "client-36.png",
+      "alt": ""
+    },
+    {
+      "file": "client-37.png",
+      "alt": "Task Rabbit logo"
+    },
+    {
+      "file": "client-38.png",
+      "alt": ""
+    },
+    {
+      "file": "client-39.png",
+      "alt": "Boots"
+    },
+    {
+      "file": "client-40.png",
+      "alt": "Unilever"
+    },
+    {
+      "file": "client-41.png",
+      "alt": "skyscanner"
+    },
+    {
+      "file": "client-42.png",
+      "alt": "Legends"
+    },
+    {
+      "file": "client-43.png",
+      "alt": "Oak View Group"
+    },
+    {
+      "file": "client-44.png",
+      "alt": "Skewb Forsyth Barnes"
+    }
+  ],
+  "photos": [
+    {
+      "file": "team-70.jpg",
+      "alt": "Joe and James collaborating."
+    },
+    {
+      "file": "team-65.jpg",
+      "alt": "Team New York at summer agm."
+    },
+    {
+      "file": "team-67.jpg",
+      "alt": "Team playing at football match."
+    },
+    {
+      "file": "team-68.jpg",
+      "alt": "The operations team."
+    },
+    {
+      "file": "team-69.jpg",
+      "alt": "Nottingham team huddle."
+    }
+  ],
+  "videos": [
+    {
+      "title": "New opportunity: ATP Media",
+      "url": "https://www.forsythbarnes.com/app/data/videos/28fd7b9e7342a93603ca1cd437173dd9.mp4",
+      "file": "video-0.jpg",
+      "alt": "ATP Media and Forsyth Barnes"
+    },
+    {
+      "title": "Opportunity: Real Madrid",
+      "url": "https://www.forsythbarnes.com/app/data/videos/7e63b19abcc0b4a0deea82ac2bcbaab0.mp4",
+      "file": "video-1.jpg",
+      "alt": ""
+    },
+    {
+      "title": "Our DEI commitment",
+      "url": "https://www.forsythbarnes.com/app/data/videos/33c59c79f6ea2a50135e681c4d0eee89.mp4",
+      "file": "video-2.jpg",
+      "alt": ""
+    },
+    {
+      "title": "Opportunity: Notts County FC CEO",
+      "url": "https://www.forsythbarnes.com/app/data/videos/5cae1eb99e3e843cc1197c75f5fdb21b.mp4",
+      "file": "video-3.jpg",
+      "alt": ""
+    },
+    {
+      "title": "Opportunity: The Inkey List",
+      "url": "https://www.forsythbarnes.com/app/data/videos/65c5b1d4522c22d6ceb5883ee88b0022.mp4",
+      "file": "video-4.jpg",
+      "alt": ""
+    },
+    {
+      "title": "Our sustainability initiatives",
+      "url": "https://www.forsythbarnes.com/app/data/videos/1d2b9ac1a4049a91e73c3e7f31aa4de8.mp4",
+      "file": "video-5.jpg",
+      "alt": ""
+    },
+    {
+      "title": "Join our team: Sports",
+      "url": "https://www.forsythbarnes.com/app/data/videos/85f43e973af44d2724b5a38bc4ab1cc1.mp4",
+      "file": "video-6.jpg",
+      "alt": ""
+    },
+    {
+      "title": "Opportunity: Wagamama",
+      "url": "https://www.forsythbarnes.com/app/data/videos/e88bc2067a62471c40e37e642df970f7.mp4",
+      "file": "video-7.jpg",
+      "alt": ""
+    },
+    {
+      "title": "Opportunity: UK Flooring Direct",
+      "url": "https://www.forsythbarnes.com/app/data/videos/ffea854995367a3b9396be6127e2710a.mp4",
+      "file": "video-8.jpg",
+      "alt": ""
+    },
+    {
+      "title": "Product: Ned Squared",
+      "url": "https://www.forsythbarnes.com/app/data/videos/4f5799ab8f7f1a77a9082ec8bb428b2a.mp4",
+      "file": "video-9.jpg",
+      "alt": ""
+    },
+    {
+      "title": "Opportunity: Renault",
+      "url": "https://www.forsythbarnes.com/app/data/videos/9d785c1afe0f9cc36bce218c26ae36c9.mp4",
+      "file": "video-11.jpg",
+      "alt": ""
+    }
+  ]
+}
