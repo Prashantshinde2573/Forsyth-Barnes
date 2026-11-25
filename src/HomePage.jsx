@@ -788,14 +788,45 @@ function Videos() {
 }
 
 function Team() {
+  const topLeft = gallery.photos[3]
+  const bottomLeft = gallery.photos[1]
+
   return (
     <section className="wrap section team" aria-labelledby="team-title">
-      <div className="team-photo">
-        {gallery.photos.slice(1).map(({ file, alt }) => <img key={file} src={media(file)} alt={alt} loading="lazy" />)}
+      <div className="team-collage">
+        <div className="team-col-left">
+          <figure className="team-card">
+            <img src={media(topLeft.file)} alt={topLeft.alt} loading="lazy" />
+          </figure>
+          <figure className="team-card">
+            <img src={media(bottomLeft.file)} alt={bottomLeft.alt} loading="lazy" />
+          </figure>
+        </div>
+        <div className="team-col-right">
+          <figure className="team-card is-tall">
+            <img src={media('team-portrait.jpg')} alt="Forsyth Barnes team incentive trip." loading="lazy" />
+          </figure>
+        </div>
+        <div className="team-emblem" aria-hidden="true">
+          <svg className="team-emblem-ring" viewBox="0 0 120 120">
+            <defs>
+              <path id="fb-team-ring" d="M 60,60 m -40,0 a 40,40 0 1,1 80,0 a 40,40 0 1,1 -80,0" />
+            </defs>
+            <text>
+              <textPath href="#fb-team-ring" startOffset="2%">
+                FORSYTH BARNES • JOIN OUR TEAM •
+              </textPath>
+            </text>
+          </svg>
+          <svg className="team-emblem-b" width="24" height="33" viewBox="0 0 36 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19.53 49.54H0V43.994H18.8C24.789 43.994 28.356 40.911 28.356 35.741C28.356 30.508 24.497 27.125 18.525 27.125H18.125V21.747C23.577 21.547 27.063 18.47 27.063 13.817C27.063 9 23.534 6 17.872 6H0V0.43H18.592C28.123 0.43 34.281 5.285 34.281 12.794C34.281 17.979 31.392 21.868 26.132 23.749L24.055 24.505L26.23 24.886C31.392 25.786 35.438 30.936 35.438 36.61C35.438 44.34 29.045 49.54 19.53 49.54Z" fill="#8c4b9d" />
+          </svg>
+        </div>
       </div>
-      <div>
+      <div className="team-copy">
         <h2 id="team-title">Join our team.</h2>
-        <Link path="/join-our-team" className="text-link">Explore careers at Forsyth Barnes <Arrow /></Link>
+        <p>Build your career with a fast-growing global talent partner across London, New York, Nottingham, and Dubai.</p>
+        <Link path="/join-our-team" className="button primary team-cta">Explore careers at Forsyth Barnes <Arrow /></Link>
         <details className="awards">
           <summary>Trust the experts <span aria-hidden="true">⌄</span></summary>
           <ul>{awards.map((award) => <li key={award}>{award}</li>)}</ul>
@@ -964,9 +995,9 @@ export default function HomePage() {
       <main id="main-content" tabIndex={-1}>
         <Hero />
         <Clients />
-        <Solutions />
-        <Results />
         <About />
+        <Results />
+        <Solutions />
         <LookingFor />
         <Videos />
         <Team />

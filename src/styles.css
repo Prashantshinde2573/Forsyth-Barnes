@@ -557,7 +557,7 @@ body:has(> #root > .fb-home) {
   margin: 0;
   padding: 0;
   list-style: none;
-  animation: fb-clients-scroll 70s linear infinite;
+  animation: fb-clients-scroll 120s linear infinite;
   will-change: transform;
 }
 
@@ -581,14 +581,12 @@ body:has(> #root > .fb-home) {
   max-width: 144px;
   max-height: 50px;
   object-fit: contain;
-  filter: grayscale(1);
-  opacity: .88;
-  mix-blend-mode: multiply;
-  transition: filter .2s ease, opacity .2s ease;
+  opacity: .95;
+  transition: transform .2s ease, opacity .2s ease;
 }
 
 .fb-home .clients-track>li:hover img {
-  filter: grayscale(0);
+  transform: scale(1.04);
   opacity: 1;
 }
 
@@ -814,7 +812,6 @@ body:has(> #root > .fb-home) {
 
 .fb-home .story {
   text-align: center;
-  padding-bottom: clamp(40px, 5vw, 68px);
 }
 
 .fb-home .story-header {
@@ -938,6 +935,7 @@ body:has(> #root > .fb-home) {
 }
 
 .fb-home .looking-for {
+  padding-top: clamp(20px, 3vw, 36px);
   padding-bottom: clamp(16px, 2.5vw, 32px);
 }
 
@@ -1374,24 +1372,112 @@ body:has(> #root > .fb-home) {
 }
 
 .fb-home .team {
-  padding-top: 0;
+  padding-top: clamp(24px, 3vw, 44px);
+  gap: clamp(32px, 6vw, 88px);
 }
 
-.fb-home .team-photo {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 6px;
-}
-
-.fb-home .team-photo img {
+.fb-home .team-collage {
+  position: relative;
   width: 100%;
-  aspect-ratio: 1;
-  object-fit: cover;
+  max-width: 560px;
+  margin-inline: auto;
+  padding: 16px;
+  border-radius: 22px;
+  background: #f1eaf3;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: center;
+  gap: 12px;
 }
 
-.fb-home .team-photo img:first-child {
-  grid-column: 1 / -1;
-  aspect-ratio: 16 / 9;
+.fb-home .team-col-left {
+  display: grid;
+  gap: 12px;
+}
+
+.fb-home .team-col-right {
+  display: flex;
+  align-items: center;
+}
+
+.fb-home .team-card {
+  margin: 0;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 14px;
+  background: var(--plum);
+  box-shadow: 0 12px 26px rgba(28, 16, 36, 0.08);
+}
+
+.fb-home .team-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3.35;
+  object-fit: cover;
+  object-position: center 22%;
+  transition: transform .45s ease;
+}
+
+.fb-home .team-card.is-tall img {
+  aspect-ratio: 3 / 4.25;
+  object-position: center;
+}
+
+.fb-home .team-card:hover img {
+  transform: scale(1.03);
+}
+
+.fb-home .team-emblem {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  width: 104px;
+  height: 104px;
+  border-radius: 50%;
+  background: #fff;
+  border: 4px solid #f1eaf3;
+  box-shadow: 0 10px 28px rgba(28, 16, 36, 0.14);
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+
+.fb-home .team-emblem-ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  animation: fb-emblem-spin 28s linear infinite;
+}
+
+.fb-home .team-emblem-ring text {
+  fill: var(--ink);
+  font: 650 7.4px/1 system-ui, sans-serif;
+  letter-spacing: 1.55px;
+}
+
+.fb-home .team-emblem-b {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes fb-emblem-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.fb-home .team-copy p {
+  margin-top: 16px;
+  max-width: 44ch;
+  color: #514654;
+}
+
+.fb-home .team-cta {
+  margin-top: 24px;
 }
 
 .fb-home .awards {
@@ -1929,6 +2015,16 @@ body:has(> #root > .fb-home) {
   .fb-home .team,
   .fb-home .footer-top {
     grid-template-columns: 1fr;
+  }
+
+  .fb-home .team-emblem {
+    width: 92px;
+    height: 92px;
+  }
+
+  .fb-home .team-emblem-b {
+    width: 22px;
+    height: 30px;
   }
 
   .fb-home .footer-links-grid {
