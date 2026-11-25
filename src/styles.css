@@ -609,13 +609,16 @@ body:has(> #root > .fb-home) {
 .fb-home .solutions-header {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
   gap: 24px;
-  margin-bottom: 24px;
+  margin-bottom: 28px;
 }
 
 .fb-home .solutions-tabs {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 10px;
 }
 
@@ -671,9 +674,8 @@ body:has(> #root > .fb-home) {
 }
 
 .fb-home .solutions-viewport {
-  --gutter: max(clamp(16px, 4.5vw, 72px), calc((100% - 1320px) / 2));
-  --slide-width: min(1140px, 78%);
-  --slide-gap: 18px;
+  --slide-width: min(1040px, 74%);
+  --slide-gap: 20px;
   position: relative;
   width: 100%;
   overflow: hidden;
@@ -681,9 +683,9 @@ body:has(> #root > .fb-home) {
 
 .fb-home .solutions-track {
   display: flex;
+  width: 100%;
   gap: var(--slide-gap);
-  padding-left: var(--gutter);
-  transform: translate3d(calc(-1 * var(--solution-index, 0) * (var(--slide-width) + var(--slide-gap))), 0, 0);
+  transform: translate3d(calc(50% - var(--slide-width) / 2 - var(--track-index, 2) * (var(--slide-width) + var(--slide-gap))), 0, 0);
   transition: transform .6s cubic-bezier(.22, 1, .36, 1);
 }
 
@@ -778,8 +780,16 @@ body:has(> #root > .fb-home) {
   -webkit-backdrop-filter: blur(10px);
   color: #fff;
   font-size: 1.15rem;
+  opacity: 0;
+  pointer-events: none;
   transform: translateY(-50%);
-  transition: background .2s ease;
+  transition: opacity .22s ease, background .2s ease;
+}
+
+.fb-home .solutions-viewport:hover .solution-arrow,
+.fb-home .solutions-viewport:focus-within .solution-arrow {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .fb-home .solution-arrow:hover {
@@ -787,11 +797,18 @@ body:has(> #root > .fb-home) {
 }
 
 .fb-home .solution-arrow.prev {
-  left: calc(var(--gutter) + 16px);
+  left: calc(50% - var(--slide-width) / 2 + 16px);
 }
 
 .fb-home .solution-arrow.next {
-  left: calc(var(--gutter) + var(--slide-width) - 64px);
+  right: calc(50% - var(--slide-width) / 2 + 16px);
+}
+
+@media (hover: none) {
+  .fb-home .solution-arrow {
+    opacity: 1;
+    pointer-events: auto;
+  }
 }
 
 .fb-home .story,
@@ -1351,7 +1368,7 @@ body:has(> #root > .fb-home) {
   }
 
   .fb-home .solutions-viewport {
-    --slide-width: calc(100% - 2 * var(--gutter));
+    --slide-width: calc(100% - 32px);
     --slide-gap: 12px;
   }
 
@@ -1369,12 +1386,12 @@ body:has(> #root > .fb-home) {
 
   .fb-home .solution-arrow.prev {
     left: auto;
-    right: calc(var(--gutter) + 64px);
+    right: calc(50% - var(--slide-width) / 2 + 64px);
   }
 
   .fb-home .solution-arrow.next {
     left: auto;
-    right: calc(var(--gutter) + 16px);
+    right: calc(50% - var(--slide-width) / 2 + 16px);
   }
 
   .fb-home .story,

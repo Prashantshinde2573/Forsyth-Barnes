@@ -289,11 +289,12 @@ function Clients() {
 
 function Solutions() {
   const total = solutions.length
-  const [slideIndex, setSlideIndex] = useState(0)
+  const offset = 2
+  const [trackIndex, setTrackIndex] = useState(offset)
   const [instant, setInstant] = useState(false)
   const [paused, setPaused] = useState(false)
   const [reducedMotion, setReducedMotion] = useState(false)
-  const active = slideIndex % total
+  const active = ((trackIndex - offset) % total + total) % total
 
   useEffect(() => {
     const pref = window.matchMedia('(prefers-reduced-motion: reduce)')
@@ -313,33 +314,36 @@ function Solutions() {
 
   function selectTab(index) {
     setInstant(false)
-    setSlideIndex(index)
+    setTrackIndex(offset + index)
   }
 
   function step(delta) {
     setInstant(false)
     if (reducedMotion) {
-      setSlideIndex((current) => (current + delta + total) % total)
+      setTrackIndex(offset + ((active + delta + total) % total))
       return
     }
-    if (delta > 0) {
-      setSlideIndex((current) => (current >= total ? 1 : current + 1))
-    } else if (slideIndex === 0) {
-      setSlideIndex(total - 1)
-    } else {
-      setSlideIndex((current) => current - 1)
-    }
+    setTrackIndex((current) => Math.max(1, Math.min(offset + total, current + delta)))
   }
 
   function handleTrackTransitionEnd(event) {
     if (event.target !== event.currentTarget) return
-    if (slideIndex >= total) {
+    if (trackIndex >= offset + total) {
       setInstant(true)
-      setSlideIndex(0)
+      setTrackIndex(offset)
+    } else if (trackIndex < offset) {
+      setInstant(true)
+      setTrackIndex(offset + total - 1)
     }
   }
 
-  const slides = [...solutions, solutions[0], solutions[1]]
+  const slides = [
+    solutions[total - 2],
+    solutions[total - 1],
+    ...solutions,
+    solutions[0],
+    solutions[1],
+  ]
 
   return (
     <section
@@ -375,7 +379,7 @@ function Solutions() {
                 >
                   {selected && !reducedMotion && (
                     <span
-                      key={slideIndex}
+                      key={active}
                       className="solution-tab-fill"
                       data-paused={paused}
                       onAnimationEnd={() => step(1)}
@@ -392,25 +396,26 @@ function Solutions() {
       <div className="solutions-viewport">
         <div
           className={`solutions-track ${instant ? 'is-instant' : ''}`}
-          style={{ '--solution-index': slideIndex }}
+          style={{ '--track-index': trackIndex }}
           onTransitionEnd={handleTrackTransitionEnd}
         >
           {slides.map((item, index) => {
-            const isDuplicate = index >= total
-            const isActive = slideIndex === index
+            const isClone = index < offset || index >= offset + total
+            const isActive = trackIndex === index
+            const realIndex = index - offset
             return (
               <article
-                key={isDuplicate ? `peek-${index}` : item.path}
-                id={isDuplicate ? undefined : `solution-panel-${index}`}
-                role={isDuplicate ? undefined : 'tabpanel'}
-                aria-labelledby={isDuplicate ? undefined : `solution-tab-${index}`}
-                aria-hidden={isDuplicate || !isActive}
+                key={isClone ? `clone-${index}` : item.path}
+                id={isClone ? undefined : `solution-panel-${realIndex}`}
+                role={isClone ? undefined : 'tabpanel'}
+                aria-labelledby={isClone ? undefined : `solution-tab-${realIndex}`}
+                aria-hidden={isClone || !isActive}
                 className={`solution-slide ${isActive ? 'is-active' : ''}`}
               >
                 <img
                   src={item.image}
-                  alt={isDuplicate ? '' : item.alt}
-                  loading={index === 0 ? 'eager' : 'lazy'}
+                  alt={isClone ? '' : item.alt}
+                  loading={index === offset ? 'eager' : 'lazy'}
                   decoding="async"
                 />
                 <div
